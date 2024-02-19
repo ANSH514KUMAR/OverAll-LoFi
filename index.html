@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="./icon.jpeg" type="image/x-icon">
+    <title>OverAll LoFi</title>
+    <link rel="stylesheet" href="./css/splashScreen.css">
+</head>
+<style>
+    #main{
+        display: none;
+    }
+    *{
+    padding: 0%;
+    margin: 0%;
+    }
+    body{
+        height: 100%;
+        user-select: none;
+    }
+    .main-navbar{
+        position: fixed;
+        top: 0%;
+        height: 50px;
+        background-color: rgb(19, 21, 20);
+        width: 100%;
+        padding: 0%;
+        box-shadow: 0px 4px 4px 0px rgba( 0 ,0.8, 0.8, 0.1);
+        z-index: 5;
+    }
+    .main-navbar h1{
+        font-family: sans-serif;
+        float: left;
+        user-select: none;
+        color: white;
+        font-style: italic;
+        line-height: 18px;
+        margin-top: 6px;
+    }
+
+    .PlayerContainer{
+        position: fixed;
+        bottom: 0px;
+        height: 50px;
+        background-color: rgb(255, 255, 255);
+        width: 100%;
+        padding: 0%;
+        box-shadow: 10px 0px 10px 0px rgba( 0 ,0.8, 0.8, 0.1);
+        z-index: 4;
+        overflow: hidden;
+        display: none;
+    }
+    .PlayingImg{
+        display: block;
+        height: 50px;
+        width: 50px;
+        float: left;
+        background: lawngreen;
+    }
+    .PlayingImg img{
+        height: 50px;
+        width: 50px;
+    }
+    .PlayName{
+        float: left;
+        font-size: 16px;
+        width: 60%;
+        height: 26px;
+        padding-top: 15px;
+        color: black;
+        margin-left: 10px;
+        font-weight: bolder;
+        font-family: sans-serif;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .PlayPause{
+        display: block;
+        height: 45px;
+        width: 45px;
+        right: 10px;
+        bottom: 3px;
+        position: absolute;
+        background-color: white;
+    }
+    .PlayPause .Play{
+        height: 45px;
+        width: 45px;
+        position: absolute;
+        display: none;
+    }
+    .PlayPause .Pause{
+        height: 45px;
+        width: 45px;
+        position: absolute;
+    }
+    .PlayerContainer audio{
+        width: 85%;
+        height: 50px;
+        background-color: rgb(243, 243, 243);
+        border: none;
+        box-shadow: none;
+        border-radius: 0%;
+        position: absolute;
+        left: 60px;
+    }
+    .musicList{
+        margin: 10px;
+        background: transparent;
+    }
+    .musicList .List{
+        height: 45px;
+        background-color: white;
+        width: 100%;
+        margin: 5px;
+        box-shadow: 10px 0px 10px 0px rgba( 0 ,0.8, 0.8, 0.1);
+        float: none;
+        list-style: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .musicList h1{
+        width: 100%;
+        font-size: 18px;
+        color: #000;
+        font-family: sans-serif;
+    }
+    .List p{
+        font-size: 16px;
+        text-decoration: none;
+        height: 20px;
+        padding-top: 14px;
+        color: black;
+        padding-left: 10px;
+        font-weight: bolder;
+        font-family: sans-serif;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .List img{
+        display: block;
+        height: 45px;
+        width: 45px;
+        float: left;
+        background: lawngreen;
+    }
+    .shine:after {
+        top: 0;
+        position: absolute;
+        left: -85%;
+        z-index: 1;
+        display: block;
+        content: '';
+        width: 50%;
+        height: 100%;
+        background: -webkit-linear-gradient(left,rgba(255,255,255,0) 0%,rgba(255,255,255,.3) 100%);
+        background: linear-gradient(to right,rgba(255,255,255,0) 0%,rgba(255,255,255,.3) 100%);
+        -webkit-transform: skewX(-25deg);
+        transform: skewX(-25deg);
+    }
+
+    /* Hover state - trigger effect */
+    .shine:hover:after {
+        opacity: 1;
+        left: 130%;
+        transition-property: left, top, opacity;
+        transition-duration: 0.7s, 0.7s, 0.15s;
+        transition-timing-function: ease;
+    }
+
+    /* Active state */
+    .shine:active:after {
+        opacity: 0;
+    }
+    .progress-container {
+        position: fixed;
+        bottom: 0%;
+        margin-left: -4px;
+        width: 101%;
+        height: 3px;
+    }
+    
+    .progress-bar {
+        height: 4px;
+        background: lawngreen;
+        width: 0%;
+    }
+    /* Desigening the splash screen */
+    .splash-screen{
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        bottom: 0px;
+        background-color: rgb(19, 21, 20);
+        text-align: center;
+    }
+    .splash-screen h1{
+        font-size: 35px;
+        text-align: center;
+        font-family: sans-serif;
+        font-weight: bolder;
+        color: white;
+        line-height: 26px;
+        padding-top: 250px;
+    }
+    #songName{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .footer{
+        display: block;
+        min-height: 100px;
+        width: 100%;
+        background: #fff;
+    }
+</style>
+<body onload="splashScreen()">
+    <div id="splash-screen" class="splash-screen">
+        <center><h1><b style="color:lawngreen; font-size: 36px; margin-left: 10px; margin-top: 8px;">OverAll</b><br>
+            <b style="font-size:28px; margin-left: 70px;">LoFi</b></h1></center>
+      </div>
+<section id="main">
+    <div class="main-navbar">
+       <h1><b style="color:lawngreen; font-size: 26px; margin-left: 10px; margin-top: 8px;">OverAll</b><br>
+        <b style="font-size:24px; margin-left: 70px;">LoFi</b></h1>
+        
+    </div>
+    <br><br><br>
+    <section>
+        <div class="PlayerContainer" id="PlayerContainer">
+            <div class="PlayingImg"><img src="./img/audio-melody.svg"></div>
+            <div class="PlayName">
+                <header id="songName"></header>
+            </div>
+            <div class="PlayPause">
+                <img src="./img/play-circle.svg" id="Play" class="Play" onclick="playSong()">
+                <img src="./img/pause-circle.svg" id="Pause" class="Pause" onclick="pauseSong()">
+            </div>
+            <audio id="audio">
+                <source id="audioSource" src=""></source>
+              </audio>
+            <div class="progress-container">
+            <div class="progress-bar" id="myBar"></div>
+          </div>
+        </div>
+         
+    </section>
+    <section>
+    <div class="musicList">
+              <div id="list" >
+                <li class="List">
+                    <img src="./img/audio-melody.svg">
+                    <p data-value="./Music/Jeena Jeena.mp3" text-value="Jeena Jeena">Jeena Jeena</p>
+                </li>
+                <li class="List">
+                    <img src="./img/audio-melody.svg">
+                    <p data-value="./Music/Hare Hare - Hum To Dil Se Hare.mp3" text-value="Hare Hare - Hum To Dil Se Hare">Hare Hare - Hum To Dil Se Hare</p>
+                </li>
+                <li class="List">
+                    <img src="./img/audio-melody.svg">
+                    <p data-value="./Music/LOG KEHTE HAI PAGAL .mp3" text-value="LOG KEHTE HAI PAGAL">LOG KEHTE HAI PAGAL</p>
+                </li>
+                <li class="List">
+                    <img src="./img/audio-melody.svg">
+                    <p data-value="./Music/Mari samana wali khidiki.mp3" text-value="Mari samana wali khidiki">Mari samana wali khidiki</p>
+                </li>
+                <li class="List">
+                    <img src="./img/audio-melody.svg">
+                    <p data-value="./Music/Tum Tak.mp3" text-value="Mari samana wali khidiki">Tum Tak</p>
+                </li>
+                <li class="List">
+                    <img src="./img/audio-melody.svg">
+                    <p data-value="./Music/Oh Oh Jane Jaana.mp3" text-value="Oh Oh Jane Jaana">Oh Oh Jane Jaana</p>
+                </li>
+                <li class="List">
+                    <img src="./img/audio-melody.svg">
+                    <p data-value="./Music/Meri Zindagi Hai Tu.mp3" text-value="Meri Zindagi Hai Tu">Meri Zindagi Hai Tu</p>
+                </li>
+                <li class="List">
+                    <img src="./img/audio-melody.svg">
+                    <p data-value="./Music/Na hoka bhi.mp3" text-value="Na hoka bhi">Na hoka bhi</p>
+                </li>
+                <li class="List">
+                    <img src="./img/audio-melody.svg">
+                    <p data-value="./Music/Moti Chain mota Paisa.mp3" text-value="Moti Chain mota Paisa">Moti Chain mota Paisa</p>
+                </li>
+            </div>
+    </div>
+    </section>
+    <section>
+        <div class="footer"></div>
+    </section>
+</section>
+<script>
+    var myVar;
+
+    function splashScreen() {
+    myVar = setTimeout(showPage, 2000);
+    }
+
+    function showPage() {
+    document.getElementById("splash-screen").style.display = "none";
+    document.getElementById("main").style.display = "block";
+    }
+</script>
+<script >
+    window.onscroll = function() {
+        myFunction()
+        };
+        function myFunction() {
+        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var scrolled = (winScroll / height) * 100;
+        document.getElementById("myBar").style.width = scrolled + "%";
+        }
+</script>
+<script>
+    list.onclick = function(e) {
+    e.preventDefault();
+    var player = document.getElementById('PlayerContainer');
+    player.style.display="block";
+    var elm = e.target;
+    var audio = document.getElementById('audio');
+    var song = document.getElementById('songName');
+  
+    var source = document.getElementById('audioSource');
+    source.src = elm.getAttribute('data-value');
+    song.innerHTML = elm.getAttribute('text-value');
+    audio.load(); //call this to just preload the audio without playing
+    audio.play(); //call this to play the song right away
+  };
+</script>
+<script>
+    var playbtn = document.getElementById('Play');
+    var pausebtn = document.getElementById('Pause');
+    function playSong(){
+        playbtn.style.display="none";
+        pausebtn.style.display="block";
+        audio.play();
+    }
+    function pauseSong(){
+        playbtn.style.display="block";
+        pausebtn.style.display="none";
+        audio.pause();
+    }
+</script>
+</body>
+</html>
